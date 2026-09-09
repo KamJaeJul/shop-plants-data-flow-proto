@@ -1,0 +1,144 @@
+{
+  "version": 8,
+  "name": "Plant Shop",
+  "glyphs": "mapbox://fonts/mapbox/{fontstack}/{range}.pbf",
+  "sources": {
+    "mapbox-streets": {
+      "type": "vector",
+      "url": "mapbox://mapbox.mapbox-streets-v8"
+    },
+    "stores": {
+      "type": "geojson",
+      "data": {
+        "type": "FeatureCollection",
+        "features": []
+      }
+    }
+  },
+  "layers": [
+    {
+      "id": "background",
+      "type": "background",
+      "paint": { "background-color": "#F4F4F4" }
+    },
+    {
+      "id": "green-space",
+      "type": "fill",
+      "source": "mapbox-streets",
+      "source-layer": "landuse",
+      "filter": [
+        "match",
+        ["get", "class"],
+        ["park", "cemetery", "grass", "wood", "agriculture"],
+        true,
+        false
+      ],
+      "paint": {
+        "fill-color": "#DCE9E2",
+        "fill-opacity": 0.9
+      }
+    },
+    {
+      "id": "water",
+      "type": "fill",
+      "source": "mapbox-streets",
+      "source-layer": "water",
+      "paint": { "fill-color": "#CBE2E8" }
+    },
+    {
+      "id": "waterways",
+      "type": "line",
+      "source": "mapbox-streets",
+      "source-layer": "waterway",
+      "paint": {
+        "line-color": "#B8D8E0",
+        "line-width": ["interpolate", ["linear"], ["zoom"], 8, 0.5, 16, 2]
+      }
+    },
+    {
+      "id": "buildings",
+      "type": "fill",
+      "source": "mapbox-streets",
+      "source-layer": "building",
+      "minzoom": 13,
+      "paint": {
+        "fill-color": "#E1E6E3",
+        "fill-outline-color": "#D2DAD6"
+      }
+    },
+    {
+      "id": "road-casing",
+      "type": "line",
+      "source": "mapbox-streets",
+      "source-layer": "road",
+      "paint": {
+        "line-color": "#CFD8D3",
+        "line-width": ["interpolate", ["linear"], ["zoom"], 5, 0.8, 12, 2.6, 16, 7]
+      }
+    },
+    {
+      "id": "roads",
+      "type": "line",
+      "source": "mapbox-streets",
+      "source-layer": "road",
+      "paint": {
+        "line-color": "#FFFFFF",
+        "line-width": ["interpolate", ["linear"], ["zoom"], 5, 0.3, 12, 1.5, 16, 5]
+      }
+    },
+    {
+      "id": "place-labels",
+      "type": "symbol",
+      "source": "mapbox-streets",
+      "source-layer": "place_label",
+      "layout": {
+        "text-field": ["coalesce", ["get", "name_en"], ["get", "name"]],
+        "text-font": ["Open Sans Semibold"],
+        "text-size": ["interpolate", ["linear"], ["zoom"], 6, 10, 14, 13]
+      },
+      "paint": {
+        "text-color": "#244B3A",
+        "text-halo-color": "#FFFFFF",
+        "text-halo-width": 1.2
+      }
+    },
+    {
+      "id": "road-labels",
+      "type": "symbol",
+      "source": "mapbox-streets",
+      "source-layer": "road",
+      "minzoom": 12,
+      "layout": {
+        "symbol-placement": "line",
+        "text-field": ["coalesce", ["get", "name_en"], ["get", "name"]],
+        "text-font": ["Open Sans Regular"],
+        "text-size": 10
+      },
+      "paint": {
+        "text-color": "#707070",
+        "text-halo-color": "#FFFFFF",
+        "text-halo-width": 1
+      }
+    },
+    {
+      "id": "store-halo",
+      "type": "circle",
+      "source": "stores",
+      "paint": {
+        "circle-radius": 10,
+        "circle-color": "#FFFFFF",
+        "circle-stroke-color": "#244B3A",
+        "circle-stroke-width": 2
+      }
+    },
+    {
+      "id": "store-marker",
+      "type": "circle",
+      "source": "stores",
+      "paint": {
+        "circle-radius": 5,
+        "circle-color": "#41745E"
+      }
+    }
+  ]
+}
